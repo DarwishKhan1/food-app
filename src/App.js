@@ -17,25 +17,15 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import Notifications from "./Components/Notifications/Notifications";
 import RestaurantOwners from "./Components/RestaurantOwners/RestaurantOwners";
 import AddRestaurantOwner from "./Components/RestaurantOwners/AddRestaurantOwner";
-import { messaging } from "./Firebase/FirebaseConfig";
 
 class App extends Component {
   state = { admin: null };
   componentDidMount() {
-    messaging
-      .requestPermission()
-      .then(() => {
-        return messaging.getToken();
-      })
-      .then((token) => {
-        localStorage.setItem("token", token);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  
     const admin = localStorage.getItem("admin");
-
-    this.setState({ admin });
+    if (admin !== "undefined") {
+      this.setState({ admin });
+    }
   }
   render() {
     return this.state.admin ? (
